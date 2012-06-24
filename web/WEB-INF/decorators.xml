@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<decorators default-dir="/WEB-INF/views/layouts">
+    <decorator name="default" page="/WEB-INF/views/layouts/visitorlayout.jsp">
+        <pattern>/*</pattern>
+    </decorator>
+</decorators>
