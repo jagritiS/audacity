@@ -2,6 +2,7 @@ package edu.smude.controllers;
 
 import edu.smude.domain.User;
 import edu.smude.services.UserService;
+import edu.smude.utils.PasswordEncoder;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -9,6 +10,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.security.MessageDigest;
 
 public class LoginController extends HttpServlet {
 
@@ -57,12 +59,25 @@ public class LoginController extends HttpServlet {
 
         User user = userService.findByUsername(username);
 
-        //TODO MD5
-        if(user.getPassword().equals(password)){
+        String md5password = PasswordEncoder.getEncoded(password);        
+        
+        if(user.getPassword().equals(md5password)){
             request.getSession().setAttribute("user",user);
-            response.sendRedirect("dashboard");
-        } else {
+            if(user.getUserType().equalsIgnoreCase("admin")){
 
+                System.out.println("admin user logged in");
+
+                response.sendRedirect("admin");
+            } else {
+
+                System.out.println("normal user logged in");
+
+                response.sendRedirect("user");
+            }
+
+        } else {
+            System.out.println("AUTHENTICATION FAILED");
+            response.sendRedirect("login");
         }
     }
 

@@ -1,5 +1,7 @@
 package edu.smude.controllers;
 
+import edu.smude.domain.User;
+
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -14,9 +16,27 @@ public class SecurityFilter implements Filter {
         HttpServletRequest httpRequest =(HttpServletRequest)request;
         HttpServletResponse httpResponse = (HttpServletResponse)response;
         HttpSession session = httpRequest.getSession();
+
+        String requestedURL = httpRequest.getRequestURL().toString();
+
+        System.out.println("url: "+requestedURL);
+
         if(session.getAttribute("user") == null){
-            ((HttpServletResponse) response).sendRedirect("login");
+
+            System.out.println("NOT AUTHENTICATED Request");            
+            httpResponse.sendRedirect("login");
         } else {
+
+            User user = (User) session.getAttribute("user");
+            System.out.println("AUTHENTICATED as " + user.getUserType());
+
+            if(requestedURL.endsWith("admin") && user.getUserType().equalsIgnoreCase("user")){
+                httpResponse.sendRedirect("user");
+                return;
+            } else if (requestedURL.endsWith("user") && user.getUserType().equalsIgnoreCase("admin")){
+                httpResponse.sendRedirect("admin");
+                return; 
+            }
             chain.doFilter(request, response);
         }
     }

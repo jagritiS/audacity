@@ -1,6 +1,9 @@
 package edu.smude.services;
 
+import edu.smude.domain.Song;
 import edu.smude.domain.User;
+import org.apache.commons.dbutils.ResultSetHandler;
+import org.apache.commons.dbutils.handlers.BeanHandler;
 
 import java.util.List;
 
@@ -32,6 +35,13 @@ public class UserService extends BaseService {
     }
 
     public User findByUsername(String username) {
-        return null;
+        try {
+            ResultSetHandler<User> h = new BeanHandler<User>(User.class);
+            return queryRunner.query("select * from user where username = ? ", h, username);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return new User();
+        
     }
 }
