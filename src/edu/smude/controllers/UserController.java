@@ -5,6 +5,7 @@ import edu.smude.services.ArtistService;
 import edu.smude.services.BandService;
 import edu.smude.services.SongService;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -29,8 +30,18 @@ public class UserController extends HttpServlet {
 
 
     protected void doProcess(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String action = request.getParameter("action") == null ? "" : request.getParameter("action");
+        String action = request.getParameter("action") == null ? "dashboard" : request.getParameter("action");
 
 
+        if(action.equals("dashboard")){
+            dashboard(request, response);
+        }
+
+    }
+
+    protected void dashboard(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+        RequestDispatcher view = request.getRequestDispatcher("/WEB-INF/views/user/dashboard.jsp");
+        view.forward(request, response);        
     }
 }

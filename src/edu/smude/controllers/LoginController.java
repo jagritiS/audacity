@@ -3,6 +3,7 @@ package edu.smude.controllers;
 import edu.smude.domain.User;
 import edu.smude.services.UserService;
 import edu.smude.utils.PasswordEncoder;
+import org.apache.commons.beanutils.BeanUtils;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -10,7 +11,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.security.MessageDigest;
+import java.sql.SQLException;
 
 public class LoginController extends HttpServlet {
 
@@ -31,6 +34,8 @@ public class LoginController extends HttpServlet {
         
         if(action.equals("register")) {
             register(request, response);
+        } else if (action.equals("validateUsername")){
+            validateUsername(request, response);
         } else if (action.equals("authenticate")){
             authenticate(request, response);
         }else if (action.equals("login")) {
@@ -44,13 +49,54 @@ public class LoginController extends HttpServlet {
 
     //display the login/registration form 
     private void login(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
+
+        //already authed? redirect to dashboard
+        if(request.getSession().getAttribute("user") != null){
+            User user = (User)request.getSession().getAttribute("user");
+
+            if(user.getUserType().equals("admin")){
+                response.sendRedirect("admin");
+                return;
+            } else if (user.getUserType().equals("user")){
+                response.sendRedirect("user");
+                return;
+            }
+
+        }
+
         RequestDispatcher view = request.getRequestDispatcher("/WEB-INF/views/login/login.jsp");
         view.forward(request, response);
     }
 
     private void register(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
-        
-        
+        PrintWriter out = response.getWriter() ;
+        try {
+            User user = new User();
+            BeanUtils.populate(user,request.getParameterMap() );
+            user.setUserType("user");
+            userService.add(user);
+            response.sendRedirect("login");
+//        } catch(SQLException sqle){
+
+        }catch(Exception e ){
+            e.printStackTrace();
+
+            out.print("failed");
+            return;
+        }
+    }
+
+    private void validateUsername(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
+        String username = request.getParameter("username");
+        User user = userService.findByUsername(username);
+        PrintWriter out = response.getWriter();
+        if(user == null){
+            out.print("available");
+        } else {
+            out.print("unavailable");
+        }
+
+
     }
 
     private void authenticate(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
@@ -82,7 +128,8 @@ public class LoginController extends HttpServlet {
     }
 
     private void logout(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
-
+        request.getSession().setAttribute("user",null);
+        response.sendRedirect("index");
     }
 
 }

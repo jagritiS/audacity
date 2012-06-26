@@ -19,23 +19,20 @@ public class SecurityFilter implements Filter {
 
         String requestedURL = httpRequest.getRequestURL().toString();
 
-        System.out.println("url: "+requestedURL);
+
 
         if(session.getAttribute("user") == null){
-
-            System.out.println("NOT AUTHENTICATED Request");            
+            System.out.println("NOT AUTHENTICATED Request");
             httpResponse.sendRedirect("login");
         } else {
-
             User user = (User) session.getAttribute("user");
-            System.out.println("AUTHENTICATED as " + user.getUserType());
 
             if(requestedURL.endsWith("admin") && user.getUserType().equalsIgnoreCase("user")){
                 httpResponse.sendRedirect("user");
                 return;
             } else if (requestedURL.endsWith("user") && user.getUserType().equalsIgnoreCase("admin")){
                 httpResponse.sendRedirect("admin");
-                return; 
+                return;
             }
             chain.doFilter(request, response);
         }
