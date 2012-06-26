@@ -1,6 +1,5 @@
 <link href="static/css/bootstrap.css" rel="stylesheet" />
 <link href="static/css/bootstrap-responsive.css" rel="stylesheet"/>
-<link href="static/css/jplayer.blue.monday.css" rel="stylesheet"/>
 
 
 <script src="static/js/jquery.js"></script>
@@ -20,5 +19,13 @@
 <script src="static/js/bootstrap-carousel.js"></script>
 <script src="static/js/bootstrap-typeahead.js"></script>
 
-<%--Player--%>
-<script src="static/js/jquery.jplayer.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style type="text/css">
+    body {
+        padding-top: 60px;
+        padding-bottom: 40px;
+    }
+</style>
+<script type="text/javascript">
+
+</script>

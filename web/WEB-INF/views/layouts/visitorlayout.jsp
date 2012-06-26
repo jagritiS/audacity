@@ -1,20 +1,12 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <%@ taglib uri="http://www.opensymphony.com/sitemesh/decorator" prefix="decorator" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en">
 <head>
     <title>Audacious</title>
     <jsp:include page="_resources.jsp" flush="true"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <style type="text/css">
-        body {
-            padding-top: 60px;
-            padding-bottom: 40px;
-        }
-    </style>
-    <script type="text/javascript">
-        
-    </script>
+
 </head>
 <body>
 <div class="navbar navbar-fixed-top">
@@ -58,12 +50,39 @@
 
             <div class="nav-collapse pull-right">
                 <ul class="nav">
-                    <li>
+                    
+                    <c:if test="${sessionScope.user == null}" >
+                        <li>
                         <a href="login?action=login">
                             <i class="icon-user"></i>
                             Login
                         </a>
                     </li>
+                    </c:if>
+                    <c:if test="${sessionScope.user != null}">
+
+                        <c:if test="${sessionScope.user.userType == 'admin'}">
+                            <c:set var="dashboardURL" value="admin?action=dashboard"/>
+                        </c:if>
+                        <c:if test="${sessionScope.user.userType == 'user'}">
+                            <c:set var="dashboardURL" value="user?action=dashboard"/>
+                        </c:if>
+
+                        <li>
+                            <a href="${dashboardURL}">
+                                <i class="icon-th"></i>
+                                Dashboard
+                            </a>
+                        </li>
+                        <li>
+                            <a href="login?action=logout">
+                                <i class="icon-user"></i>
+                                Logout
+                            </a>
+                        </li>
+
+                    </c:if>
+
                 </ul>
             </div>
 

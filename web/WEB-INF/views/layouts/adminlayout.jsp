@@ -19,9 +19,9 @@
                 <a class="brand" href="">audacious</a>
                 <div class="nav-collapse collapse">
                     <ul class="nav">
-                        <li><a href="index">Home</a></li>
-                        <li><a href="index">Home</a></li>
-                        <li><a href="index">Home</a></li>
+                        <li><a href="?module=users">Users</a></li>
+                        <li><a href="?module=bands">Bands</a></li>
+                        <li><a href="?module=reports">Reports</a></li>
                     </ul>
                 </div>
             </div>
@@ -29,7 +29,7 @@
     </div>
     <div class="container">
         <decorator:body />
-        
+
         <footer class="footer">
              
         </footer>

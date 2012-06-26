@@ -1,5 +1,7 @@
 <html>
-<head></head>
+<head>
+
+</head>
 
 <body>
 <div class="container">
@@ -34,21 +36,22 @@
 
                 <div id="forms" class="tab-content">
                     <div class="tab-pane fade" id="register">
-                        <form action="" class="well">
+                        <form method="post" class="well" id="registerForm" action="">
                             <h2>Register</h2>
                             <input type="text" name="fullname" placeholder="Name"/>
                             <input type="text" name="email" placeholder="Email"/>
                             <input type="text" name="username" placeholder="Username"/>
                             <input type="password" name="password" placeholder="Password"/>
                             <input type="password" name="repassword" placeholder="Re-Password"/>
-                            <botton type="submit" class="btn">Register</botton>
+                            <botton id="registerBtn" type="submit" class="btn">Register</botton>
                         </form>
                     </div>
                     <div class="tab-pane fade active in" id="login">
-                         <form class="well">
+                         <form action="login" method="post" class="well" id="loginForm">
                              <h2>Login</h2>
-                             <input type="text" placeholder="Username"/>
-                             <input type="password" placeholder="Password"/>
+                             <input type="text" name="username" placeholder="Username"/>
+                             <input type="password" name="password" placeholder="Password"/>
+                             <input type="hidden" name="action" value="authenticate"/>
                              <label>
                              <input type="checkbox"> Remember Me
                                  </label>
@@ -60,7 +63,63 @@
             </div>
         </div>
     </header>
-</div>    
+</div>
+<script type="text/javascript">
+    $("#registerBtn").click(function() {
+
+        var username = document.forms.registerForm.username.value;
+        var password = document.forms.registerForm.password.value;
+        var repassword = document.forms.registerForm.repassword.value;
+
+        if(username == ""){
+            alert("Your username can not be blank");
+            return;
+        }
+
+        if(password == ""){
+            alert("You can not have a blank password");
+            return;
+        }
+
+        if(password != repassword){
+            alert("Password do not match");
+            return;
+        }
+
+        var url = "?action=validateUsername&username="+username;
+
+        $.ajax ({
+            type: "GET",
+            url: url,
+//            data: $("#registerForm").serialize(),
+            success: function(data){
+                if(data != "available"){
+                    alert("This username is already in use, please user different one");
+                    return;
+                } else {
+                    //registration
+                    url = "?action=register"
+
+                    $.ajax ({
+                        type: "POST",
+                        url: url,
+                        data: $("#registerForm").serialize()+"&action=register",
+                        success: function(data){
+                            if(data == "failed"){
+                                alert("Could not register a user. Please try again later");
+                            } else {
+                                $('#registerForm').get(0).reset();
+                                alert("Your user is register, Please login with your username and password");
+                            }
+                        }
+                    });
+                }
+            }
+        });
+        return false;
+    });
+
+</script>
 
 </body>
 </html>
