@@ -20,7 +20,13 @@ public class SongService extends BaseService {
     }
 
     public void delete(long albumId) {
+        try{
 
+            queryRunner.update("delete from song where id =?",albumId);
+
+        } catch(Exception e ){
+            e.printStackTrace();
+        }
     }
 
     public List<Song> list() {
@@ -100,4 +106,29 @@ public class SongService extends BaseService {
         }
         return song; 
     }
+
+    public List<Song> findByAlbumId(long albumId){
+        try {
+            ResultSetHandler<List<Song>> h = new BeanListHandler<Song>(Song.class);
+
+            return queryRunner.query("select a.* from song a join album b on a.albumId = b.id where b.id = ?", h, albumId);
+        } catch(Exception e){
+            e.printStackTrace();
+        }
+        return new LinkedList<Song>();
+    }
+
+    public List<Song> findByBandId(long bandId){
+        try {
+            ResultSetHandler<List<Song>> h = new BeanListHandler<Song>(Song.class);
+
+            return queryRunner.query("select a.* from song a join album b on a.albumId = b.id " +
+                    " join band c on b.bandId = c.id where b.id = ?", h, bandId);
+        } catch(Exception e){
+            e.printStackTrace();
+        }
+        return new LinkedList<Song>();
+    }
+
+
 }
