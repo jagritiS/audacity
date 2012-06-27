@@ -16,11 +16,12 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="brand" href="">audacious</a>
+                <a class="brand" href="">Dashboard</a>
                 <div class="nav-collapse collapse">
                     <ul class="nav">
+                        <li><a href="index">Main View</a></li>
                         <li><a href="?module=users">Users</a></li>
-                        <li><a href="?module=bands">Bands</a></li>
+                        <li><a href="?module=bands&action=list">Bands</a></li>
                         <li><a href="?module=reports">Reports</a></li>
                     </ul>
                 </div>

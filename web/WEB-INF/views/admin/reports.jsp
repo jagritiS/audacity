@@ -4,6 +4,6 @@
   <head><title>Admin Dashboard</title></head>
   <body>
 
-  Admin dashboard 
+  <h1>Reports</h1>
   </body>
 </html>
