@@ -98,13 +98,13 @@
                         </div>
                         <div class="tab-pane fade " id="topalbums">
                             <div class="container-fluid">
-                                <c:forEach var="album" items="${topAlbums}">
+                                <c:forEach var="song" items="${topAlbums}">
 
                                     <div>
-                                        <a href="?action=album&id=${album.id}"><h3>${album.name}</h3></a>
+                                        <a href="?action=album&id=${song.id}"><h3>${song.name}</h3></a>
 
                                         <div>
-                                            <a href="">${album.name}</a>
+                                            <a href="">${song.name}</a>
                                         </div>
                                     </div>
                                     <hr/>

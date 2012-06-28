@@ -19,10 +19,28 @@
                 <a class="brand" href="">Dashboard</a>
                 <div class="nav-collapse collapse">
                     <ul class="nav">
-                        <li><a href="index">Main View</a></li>
+
                         <li><a href="?module=users">Users</a></li>
                         <li><a href="?module=bands&action=list">Bands</a></li>
                         <li><a href="?module=reports">Reports</a></li>
+                    </ul>
+                </div>
+
+                <div class="nav-collapse pull-right">
+                    <ul class="nav">
+                        <li>
+                            <a href="index">
+                                <i class="icon-th"></i>
+                                Main View
+                            </a>
+                        </li>
+                        <li>
+                            <a href="login?action=logout">
+
+                                <i class="icon-user"></i>
+                                Logout
+                            </a>
+                        </li>
                     </ul>
                 </div>
             </div>

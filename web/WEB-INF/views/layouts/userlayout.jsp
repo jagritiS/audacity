@@ -16,12 +16,31 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="brand" href="">audacious</a>
+                <a class="brand" href="">Dashboard</a>
                 <div class="nav-collapse collapse">
                     <ul class="nav">
-                        <li><a href="index">Home</a></li>
-                        <li><a href="index">Home</a></li>
-                        <li><a href="index">Home</a></li>
+                        <li><a href="?module=profile">Profile</a></li>
+                        <li><a href="?module=songs">Songs</a></li>
+                        <li><a href="?module=albums">Albums</a></li>
+                        <li><a href="?module=reports">Reports</a></li>
+                    </ul>
+                </div>
+
+                <div class="nav-collapse pull-right">
+                    <ul class="nav">
+                        <li>
+                            <a href="index">
+                                <i class="icon-th"></i>
+                                Main View
+                            </a>
+                        </li>
+                        <li>
+                            <a href="login?action=logout">
+
+                                <i class="icon-user"></i>
+                                Logout
+                            </a>
+                        </li>
                     </ul>
                 </div>
             </div>

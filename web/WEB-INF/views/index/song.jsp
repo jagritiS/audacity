@@ -19,18 +19,14 @@
             <div class="span8">
                 <hr/>
                 <h1>${song.name}</h1>
-                ${song.album.name}
+                from <a href="album?action=list&id=${song.album.id }">${song.album.name}</a><br/>
+                by <a href="band?action=list&id=${song.album.band.id }">${song.album.band.name }</a><br/>
                 ${song.details}
 
             </div>
 
         </div>
-        <div class="row">
-            <hr/>
-            <div class="span12">
-                <h1>Band Name</h1>
-            </div>
-        </div>
+       
     </div>
 </div>
 </body>
