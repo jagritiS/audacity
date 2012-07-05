@@ -6,23 +6,34 @@ import org.apache.commons.dbutils.ResultSetHandler;
 import org.apache.commons.dbutils.handlers.BeanHandler;
 import org.apache.commons.dbutils.handlers.BeanListHandler;
 
+import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 
 public class SongService extends BaseService {
 
-    public void add(Song album) {
-
+    public void add(Song song) {
+        try {
+            queryRunner.update("insert into song (name, details, fileName, albumId, createdDate) values (?,?,?,?,?)",
+                    song.getName(), song.getDetails(), song.getFileName(), song.getAlbumId(), new Date());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
-    public void update(Song album) {
-
+    public void update(Song song) {
+        try {
+            queryRunner.update("update song set name=?, details=?, fileName=?, albumId=?, featured=?, featuredDate=? where id = ?",
+                    song.getName(), song.getDetails(), song.getFileName(), song.getAlbumId(), song.isFeatured(), song.getFeaturedDate(), song.getId());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
-    public void delete(long albumId) {
+    public void delete(long songId) {
         try{
 
-            queryRunner.update("delete from song where id =?",albumId);
+            queryRunner.update("delete from song where id =?", songId);
 
         } catch(Exception e ){
             e.printStackTrace();
@@ -64,7 +75,7 @@ public class SongService extends BaseService {
                     "on a.id = v.item_id \n" +
                     "and v.item='song'\n" +
                     "group by item_id \n" +
-                    "order by count(1) desc limit 10; ", h);
+                    "order by count(1) desc limit 5; ", h);
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -123,7 +134,7 @@ public class SongService extends BaseService {
             ResultSetHandler<List<Song>> h = new BeanListHandler<Song>(Song.class);
 
             return queryRunner.query("select a.* from song a join album b on a.albumId = b.id " +
-                    " join band c on b.bandId = c.id where b.id = ?", h, bandId);
+                    " join band c on b.bandId = c.id where c.id = ?", h, bandId);
         } catch(Exception e){
             e.printStackTrace();
         }

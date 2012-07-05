@@ -109,6 +109,7 @@ public class LoginController extends HttpServlet {
         
         if(user.getPassword().equals(md5password)){
             request.getSession().setAttribute("user",user);
+            request.getSession().setAttribute("userId",user.getId());
             if(user.getUserType().equalsIgnoreCase("admin")){
 
                 System.out.println("admin user logged in");

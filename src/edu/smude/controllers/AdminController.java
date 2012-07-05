@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.Date;
 import java.util.List;
 
 public class AdminController extends HttpServlet {
@@ -31,14 +32,16 @@ public class AdminController extends HttpServlet {
 
 
     protected void doProcess(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String action = request.getParameter("module") == null ? "users" : request.getParameter("module");
+        String module = request.getParameter("module") == null ? "users" : request.getParameter("module");
 
-        if(action.equals("users")){
+        if(module.equals("users")){
             users(request, response);
-        } else if (action.equals("bands")){
+        } else if (module.equals("bands")){
             bands(request, response);
-        } else if (action.equals("reports")){
+        } else if (module.equals("reports")){
             reports(request, response);
+        } else if (module.equals("songs")){
+            songs(request, response);
         }
     }
 
@@ -92,6 +95,22 @@ public class AdminController extends HttpServlet {
 
         RequestDispatcher view = request.getRequestDispatcher("/WEB-INF/views/admin/reports.jsp");
         view.forward(request, response);
+    }
+
+    protected void songs(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String action = request.getParameter("action") == null ? "list" : request.getParameter("action");
+
+        if(action.equals("feature")){
+            Long id = Long.parseLong(request.getParameter("id"));
+            Song song = songService.get(id);
+            song.setFeatured(true);
+            song.setFeaturedDate(new Date());
+            songService.update(song);
+            response.sendRedirect("index?action=play&id="+id);
+        }
+
+
+
     }
 
 }

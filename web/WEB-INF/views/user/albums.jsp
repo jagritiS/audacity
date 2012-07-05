@@ -14,7 +14,11 @@
     </tr>
     <c:forEach var="song" items="${albums}">
         <tr>
-            <td>${song.name}</td>
+            <td>
+                <a href ="index?action=album&id=${song.id}">
+            ${song.name}
+                </a>
+            </td>
             <td>${song.details}</td>
             <td>
                 <a href="?module=albums&action=delete&id=${song.id}">
@@ -27,7 +31,7 @@
 </table>
 
 <div id="newAlbumForm" class="modal hide">
-    <form class="well">
+    <form class="well" method="post" action="" enctype="multipart/form-data">
     <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal">×</button>
         <h3>New Album</h3>
@@ -39,6 +43,7 @@
             <input type="hidden" name="module" value="albums"/>
             <input type="hidden" name="action" value="add"/>
             <input type="text" value="" name="name" placeholder="Album Name"/> <br/>
+            Album Cover <input type="file" name="albumCover" placeholder="albumCover"/> <br/>
             <textarea name="details" rows="8"  placeholder="Details" ></textarea>
 
 

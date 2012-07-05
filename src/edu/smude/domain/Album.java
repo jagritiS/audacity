@@ -11,7 +11,8 @@ public class Album {
 
     private long id;
     private String name;
-    private String details; 
+    private String details;
+    private String fileName;
     private long bandId;
     private List<Artist> artists = new LinkedList<Artist>();
 
@@ -57,5 +58,13 @@ public class Album {
 
     public void setArtists(List<Artist> artists) {
         this.artists = artists;
+    }
+
+    public String getFileName() {
+        return fileName;
+    }
+
+    public void setFileName(String fileName) {
+        this.fileName = fileName;
     }
 }

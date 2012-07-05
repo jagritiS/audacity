@@ -15,12 +15,18 @@ import java.util.List;
 public class AlbumService extends BaseService {
 
     public void add(Album album) {
-
+        try {
+            queryRunner.update("insert into album (name, details, bandId) values (?,?,?)",
+                    album.getName(), album.getDetails(), album.getBandId());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public void update(Album album) {
         try {
-            queryRunner.update("update album set name=?, details=? where id = ?");
+            queryRunner.update("update album set name=?, details=?, bandId = ? where id = ?",
+                    album.getName(), album.getDetails(), album.getBandId(), album.getId());
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -57,7 +63,20 @@ public class AlbumService extends BaseService {
                     "on a.id = v.item_id \n" +
                     "and v.item='album'\n" +
                     "group by item_id \n" +
-                    "order by count(1) desc limit 10 ; ", h);
+                    "order by count(1) desc limit 5 ; ", h);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return new LinkedList<Album>();
+    }
+
+    public List<Album> findByUserId(long userId) {
+        try {
+            ResultSetHandler<List<Album>> h = new BeanListHandler<Album>(Album.class);
+
+            return queryRunner.query("select a.* from album a join band b on a.bandId = b.id where b.userId = ?", h, userId);
 
         } catch (Exception e) {
             e.printStackTrace();

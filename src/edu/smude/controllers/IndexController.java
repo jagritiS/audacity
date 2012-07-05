@@ -8,6 +8,7 @@ import edu.smude.services.AlbumService;
 import edu.smude.services.ArtistService;
 import edu.smude.services.BandService;
 import edu.smude.services.SongService;
+import edu.smude.services.ViewCountService;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -22,6 +23,7 @@ public class IndexController extends HttpServlet {
     private ArtistService artistService = new ArtistService();
     private BandService bandService = new BandService();
     private SongService songService = new SongService();
+    private ViewCountService logService = new ViewCountService();
     
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -62,6 +64,9 @@ public class IndexController extends HttpServlet {
         long id = request.getParameter("id") == null ? 0 : Long.parseLong(request.getParameter("id"));
         Album album = albumService.get(id);
         request.setAttribute("album", album);
+        request.setAttribute("songs", songService.findByAlbumId(id));
+        
+        logService.logAlbum(album);
 
         RequestDispatcher view = request.getRequestDispatcher("/WEB-INF/views/index/album.jsp");
         view.forward(request, response);
@@ -80,6 +85,9 @@ public class IndexController extends HttpServlet {
         long id = request.getParameter("id") == null ? 0 : Long.parseLong(request.getParameter("id"));
         Band band = bandService.get(id);
         request.setAttribute("band", band);
+        request.setAttribute("songs",songService.findByBandId(id));
+        
+        logService.logBand(band);
 
         RequestDispatcher view = request.getRequestDispatcher("/WEB-INF/views/index/band.jsp");
         view.forward(request, response);
@@ -95,6 +103,8 @@ public class IndexController extends HttpServlet {
         }
 
         request.setAttribute("song", song);
+        
+        logService.logSong(song);
         
         RequestDispatcher view = request.getRequestDispatcher("/WEB-INF/views/index/song.jsp");
         view.forward(request, response);

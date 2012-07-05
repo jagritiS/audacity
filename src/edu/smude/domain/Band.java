@@ -1,15 +1,20 @@
 package edu.smude.domain;
 
+import java.util.Date;
+
 public class Band {
-    private int id;
+    private Long id;
     private String name;
     private String details;
+    private boolean featured;
+    private Date featuredDate;
+    private long userId;
 
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -27,5 +32,29 @@ public class Band {
 
     public void setDetails(String details) {
         this.details = details;
+    }
+
+    public long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(long userId) {
+        this.userId = userId;
+    }
+
+    public boolean isFeatured() {
+        return featured;
+    }
+
+    public void setFeatured(boolean featured) {
+        this.featured = featured;
+    }
+
+    public Date getFeaturedDate() {
+        return featuredDate;
+    }
+
+    public void setFeaturedDate(Date featuredDate) {
+        this.featuredDate = featuredDate;
     }
 }

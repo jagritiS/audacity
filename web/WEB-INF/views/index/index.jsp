@@ -84,7 +84,13 @@
                         <div class="tab-pane fade active in" id="topsongs">
                             <div class="container-fluid">
                                 <c:forEach var="song" items="${topSongs}">
-                                    <img src="static/img/50x50.gif" alt="" class="pull-right" />
+
+                                    <c:set var="img" value="static/img/50x50.gif"/>
+                                    <c:if test="${song.album.fileName != null}">
+                                        <c:set var="img" value="albumcovers/${song.album.fileName}"/>
+                                    </c:if>
+
+                                    <img src="${img}" width="50" height="50" alt="" class="pull-right" />
                                     <div>
                                         <a href="?action=play&id=${song.id}"><h3>${song.name}</h3></a>
 
@@ -96,15 +102,19 @@
                                 </c:forEach>
                             </div>
                         </div>
-                        <div class="tab-pane fade " id="topalbums">
+                        <div class="tab-pane fade" id="topalbums">
                             <div class="container-fluid">
-                                <c:forEach var="song" items="${topAlbums}">
-
+                                <c:forEach var="album" items="${topAlbums}">
+                                    <c:set var="img" value="static/img/50x50.gif"/>
+                                    <c:if test="${album.fileName != null}">
+                                        <c:set var="img" value="albumcovers/${album.fileName}"/>
+                                    </c:if>
+                                    <img src="${img}" width="50" height="50" alt="alt" class="pull-right" />
                                     <div>
-                                        <a href="?action=album&id=${song.id}"><h3>${song.name}</h3></a>
+                                        <a href="?action=album&id=${album.id}"><h3>${album.name}</h3></a>
 
                                         <div>
-                                            <a href="">${song.name}</a>
+                                            <a href="">${album.name}</a>
                                         </div>
                                     </div>
                                     <hr/>
@@ -133,18 +143,46 @@
                 <div class="tab-content">
                     <div class="tab-pane fade active in" id="editorsPick">
                         <div class="container-fluid">
-                            <c:forEach var="song" items="${featuredSongs}">
-                                <div>
-                                ${song.name}
-                                </div>
-                            </c:forEach>
+                            <div class="row">
+                                <c:forEach var="song" items="${featuredSongs}">
+                                    <c:set var="img" value="static/img/50x50.gif"/>
+                                    <c:if test="${song.album.fileName != null}">
+                                        <c:set var="img" value="albumcovers/${song.album.fileName}"/>
+                                    </c:if>
+
+
+                                    <div class="span2" style="height:100px; ">
+                                        <img src="${img}" width="50" height="50" alt="" class="pull-right" />
+                                        <a href="?action=play&id=${song.id}">
+                                            <i class="icon-play"></i>
+                                            <strong>${song.name}</strong> <br/>
+                                        </a>
+                                            ${song.album.name}
+                                    </div>
+                                </c:forEach>
+                            </div>
                         </div>
                     </div>
                     <div class="tab-pane fade " id="latestSongs">
                         <div class="container-fluid">
-                            <c:forEach var="song" items="${latestSongs}">
-                                ${song.name}
-                            </c:forEach>
+                            <div class="row">
+                                <c:forEach var="song" items="${latestSongs}">
+                                    <c:set var="img" value="static/img/50x50.gif"/>
+                                    <c:if test="${song.album.fileName != null}">
+                                        <c:set var="img" value="albumcovers/${song.album.fileName}"/>
+                                    </c:if>
+
+
+                                    <div class="span2" style="height:100px; ">
+                                        <img src="${img}" width="50" height="50" alt="" class="pull-right" />
+                                        <a href="?action=play&id=${song.id}">
+                                            <i class="icon-play"></i>
+                                            <strong>${song.name}</strong> <br/>
+                                        </a>
+                                            ${song.album.name}
+                                    </div>
+                                </c:forEach>
+                            </div>
                         </div>
                     </div>
                 </div>

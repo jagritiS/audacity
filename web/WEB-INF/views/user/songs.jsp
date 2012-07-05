@@ -42,8 +42,8 @@
             <input type="text" value="" name="name" placeholder="Song Title"/> <br/>
             <input type="file" name="file"/><br/>
             <select name="albumId">
-                <c:forEach var="album" items="${albums}">
-                    <option value="${album.id}">${album.name}</option>
+                <c:forEach var="song" items="${albums}">
+                    <option value="${song.id}">${song.name}</option>
                 </c:forEach>
             </select> <br/>
             <textarea name="details" rows="8"  placeholder="Details" ></textarea>

@@ -49,10 +49,17 @@
             </div>
 
             <div class="nav-collapse pull-right">
+                
                 <ul class="nav">
+                    <li> 
+                        <form action="?action=search" class="navbar-search pull-right" method="get">
+                            <i class="icon-search"></i>
+                            <input type="text" class="search-query span2" placeholder="Search"/>
+                        </form>
+                    </li>
                     
                     <c:if test="${sessionScope.user == null}" >
-                        <li>
+                    <li>
                         <a href="login?action=login">
                             <i class="icon-user"></i>
                             Login
@@ -86,10 +93,7 @@
                 </ul>
             </div>
 
-            <form action="?action=search" class="navbar-search pull-right" method="get">
-                <i class="icon-search"></i>
-                <input type="text" class="search-query span2" placeholder="Search"/>
-            </form>
+
 
         </div>
     </div>
